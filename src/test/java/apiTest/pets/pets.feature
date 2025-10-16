@@ -95,7 +95,7 @@ Feature: sample karate test script
     And match response.status == 'sold'
 
   Scenario: get pets by status sold
-    Given path 'pets', 'findByStatus'
+    Given path 'pet', 'findByStatus'
     * param status = 'sold'
     When method GET
     Then status 200
