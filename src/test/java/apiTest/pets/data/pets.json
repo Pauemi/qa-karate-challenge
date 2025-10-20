@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1018,
+    "name": "Kiwi",
+    "status": "available",
+    "category": { "id": 5, "name": "bird" },
+    "photoUrls": ["https://tse2.mm.bing.net/th/id/OIP.Ldn0S_aXaa8N1ZR86YpZIwHaFk?cb=12&rs=1&pid=ImgDetMain&o=7&rm=3"],
+    "tags": [{"id":1,"name":"soft"}]
+  },
+  {
+    "id": 1019,
+    "name": "Izzie",
+    "status": "pending",
+    "category": { "id": 1, "name": "cat" },
+    "photoUrls": ["https://miro.medium.com/v2/resize:fit:950/1*u9llNVCTlbqCaC7BvEc2CA.png"],
+    "tags": [
+      {"id":1,"name":"soft"},
+      {"id":2,"name":"short hair"},
+      {"id":3,"name":"white"}
+    ]
+  }
+]

@@ -3,36 +3,20 @@ Feature: sample karate test script
 
   Background:
     * url 'https://petstore.swagger.io/v2'
+    * configure headers = {Content-Type: 'application/json'}
+    * configure retry = { count: 3, interval: 500 }
 
-
-  Scenario: create a pet and get the created pet by id
+@create_get
+  Scenario Outline: create a pet and get the created pet by <id> - <name>
     * def newPet =
       """
       {
-        "id": 18,
-        "category": {
-          "id": 1,
-          "name": "cat"
-        },
-        "name": "Izzie",
-        "photoUrls": [
-          "https://miro.medium.com/v2/resize:fit:950/1*u9llNVCTlbqCaC7BvEc2CA.png"
-        ],
-        "tags": [
-          {
-            "id": 1,
-            "name": "soft"
-          },
-          {
-            "id": 2,
-            "name": "short hair"
-          },
-          {
-            "id": 3,
-            "name": "white"
-          }
-        ],
-        "status": "available"
+        "id": <id>,
+        "category": <category>,
+        "name": "<name>",
+        "photoUrls": <photoUrls>,
+        "tags": <tags>,
+        "status": "<status>"
       }
       """
 
@@ -45,44 +29,31 @@ Feature: sample karate test script
     * print 'created id is: ', id
 
     Given path 'pet', id
+    * retry until responseStatus == 200
     When method GET
     Then status 200
     And match response contains newPet
+    Examples:
+      | read('data/pets.json') |
 
-  @test
-  Scenario: update the pet´s name and status
-    * def pet =
+
+  @update
+  Scenario Outline: update the pet´s name and status
+    * def updatePet =
       """
       {
-        "id": 18,
-        "category": {
-          "id": 1,
-          "name": "cat"
-        },
-        "name": "Isabel",
-        "photoUrls": [
-          "https://miro.medium.com/v2/resize:fit:950/1*u9llNVCTlbqCaC7BvEc2CA.png"
-        ],
-        "tags": [
-          {
-            "id": 1,
-            "name": "soft"
-          },
-          {
-            "id": 2,
-            "name": "short hair"
-          },
-          {
-            "id": 3,
-            "name": "white"
-          }
-        ],
-        "status": "sold"
+        "id": <id>,
+        "category": <category>,
+        "name": "<name>",
+        "photoUrls": <photoUrls>,
+        "tags": <tags>,
+        "status": "<status>"
       }
       """
 
     Given path 'pet'
-    * request pet
+    * request updatePet
+    * retry until responseStatus == 200
     When method PUT
     Then status 200
 
@@ -91,12 +62,18 @@ Feature: sample karate test script
     Given path 'pet', id
     When method GET
     Then status 200
-    And match response.name == 'Isabel'
-    And match response.status == 'sold'
-
+    And match response.name == '<name>'
+    And match response.status == '<status>'
+    Examples:
+      | read('data/pets_update.json') |
+  @get_sold
   Scenario: get pets by status sold
     Given path 'pet', 'findByStatus'
     * param status = 'sold'
     When method GET
     Then status 200
     And match each response[*].status == 'sold'
+
+
+
+

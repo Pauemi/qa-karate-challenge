@@ -1,0 +1,14 @@
+[
+  {
+      "id": 1019,
+      "name": "Isabel",
+      "status": "sold",
+      "category": { "id": 1, "name": "cat" },
+      "photoUrls": ["https://miro.medium.com/v2/resize:fit:950/1*u9llNVCTlbqCaC7BvEc2CA.png"],
+      "tags": [
+        {"id":1,"name":"soft"},
+        {"id":2,"name":"short hair"},
+        {"id":3,"name":"white"}
+      ]
+    }
+]
